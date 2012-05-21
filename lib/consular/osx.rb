@@ -245,7 +245,13 @@ module Consular
     def open_terminal_with(key, options = nil)
       terminal_process.keystroke(key, :using => :command_down)
       set_options options
-      active_tab
+      last_active_tab = active_tab
+      while last_active_tab == @last_tab
+        sleep 0.5
+        last_active_tab = active_tab
+      end
+      @last_tab = last_active_tab
+      last_active_tab
     end
 
   end
